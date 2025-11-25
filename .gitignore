@@ -1,0 +1,4 @@
+# Ignore loan data files
+data/loan_data_2007_2014.csv
+data/loan_preprocessed.csv
+data/loan_clean.csv
