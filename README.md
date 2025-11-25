@@ -1,78 +1,78 @@
-  ![Heart Attack Prediction Model](docs/figures/HeartAttackPredictionModelGif.gif)
+ ![Credit Loss Modeling](docs/credit_risk.png)
 
 ## Project Introduction
 
-This project aims to develop an early detection system that predicts the risk of heart attacks using accessible and practical features, such as age, lifestyle, and medical history.
+This project aims to develop models for predicting Expected Credit Loss (ECL) for loans on the Lending Club platform. By analyzing important factors like Probability of Default (PD), Exposure at Default (EAD), and Loss Given Default (LGD), the models will provide insights that inform credit risk management strategies.
 
 ## Table of Contents
 
 - [References to Analysis](#references-to-analysis)
 - [Project Overview](#project-overview)
-- [Data Science Solutions](#data-science-solutions)
-- [Metrics of Success](#metrics-of-success)
+- [Goal of the Analysis](#goal-of-the-analysis)
+- [Limitations](#limitations)
+- [Dataset Overview](#dataset-overview)
 - [Project Organization](#project-organization)
 - [Project Flowchart](#project-flowchart)
-- [Dataset Description](#dataset-description)
-- [Data Dictionary](#data-dictionary)
 - [Credits & References](#credits--references)
 
-
 ## References to Analysis
-For those who wish to deepen their understanding of the processes and findings in Exploratory Data Analysis, Modeling, and Evaluation, please refer to the links below for direct access to Jupyter Notebooks
-1. [book1_introduction_data_import_cleaning_heart_attack_prediction](notebooks/book1_introduction_data_import_cleaning_heart_attack_prediction.ipynb)
-2. [book2_EDA_cleaning_stage2_heart_attack_prediction_book2](notebooks/book2_EDA_cleaning_stage2_heart_attack_prediction_book2.ipynb)
-3. [book3_feature_engineering_baseline_modeling](notebooks/book3_feature_engineering_baseline_modeling.ipynb)
-4. [book4_hyperparameter_tuning_advanced_modeling.ipynb](notebooks/book4_hyperparameter_tuning_advanced_modeling.ipynb)
-5. [book5_interpretation_limitations_summary.ipynb](notebooks/book5_interpretation_limitations_summary.ipynb)
 
-Appendix: 
-1. [Appendix_data_extraction_transformation_2022_BFRSS_survey](notebooks/Appendix_data_extraction_transformation_2022_BFRSS_survey.ipynb)
-2. [Appendix_data_extraction_transformation_2023_BFRSS_survey](notebooks/Appendix_data_extraction_transformation_2023_BFRSS_survey.ipynb)
+For those who wish to deepen their understanding of the processes and findings in Exploratory Data Analysis, Modeling, and Evaluation, please refer to the links below for direct access to Jupyter Notebooks
+1. [notebook1_data_import_cleaning_target_creation](notebooks/notebook1_data_import_cleaning_target_creation.ipynb)
+2. [notebook2_EDA](notebooks/notebook2_EDA.ipynb)
+3. [notebook3_pd_model](notebooks/notebook3_pd_model.ipynb)
+4. [notebook4_lgd_model](notebooks/notebook4_lgd_model.ipynb)
+
 
 ## Project Overview
-- **Motivation:**<br>
-My interest in this project is deeply personal; having lost my uncle to cardiac arrest and witnessing family members affected by cardiac disease, I often feel anxious about my own risk of having a heart attack, especially during times of high stress, lack of sleep, or insufficient exercise. This experience drives my eagerness to develop a model that can identify individuals at risk of heart attacks, thereby enabling proactive health management.
 
-- **Problem Description:** <br>
-Heart attacks are a leading cause of death worldwide, resulting in long-term health issues and substantial financial costs. Current risk assessment tools are limited by their reliance on blood test results and constraints such as the user’s age, which restricts the opportunity to identify individuals at risk of having a heart attack. This project aims to create a more user-friendly and accessible heart attack risk assessment model using readily available features.
+### Why Banks Need to Predict Expected Credit Loss (ECL)
 
-- **Affected Groups:** <br>
-According to the CDC, approximately 805,000 people in the U.S. experience a heart attack each year, translating to someone suffering a heart attack every 40 seconds. This number underscores a staggering reality: many more people could be suffering from heart attacks when considering global population and undiagnosed cases. Common signs include chest discomfort, shortness of breath, upper body discomfort, and light-headedness. Symptoms can be subtle, particularly in women, who may experience non-painful signs such as fatigue or nausea, which can lead to delays in seeking emergency care. Therefore, it is crucial for individuals to be aware of their heart attack risk and stay vigilant for any relevant symptoms.
+Banks and lending institutions face the fundamental challenge of managing credit risk to ensure financial stability, regulatory compliance, and profitability. Accurate prediction of **Expected Credit Loss (ECL)** is essential because it provides a forward-looking estimate of potential losses from the loan portfolio. This estimation helps:
+- Allocate sufficient capital reserves to cover anticipated losses.
+- Price loans appropriately, balancing profitability with risk mitigation.
+- Comply with regulatory standards such as IFRS 9 and Basel III, which require recognition of expected losses based on current and forecasted information.
+- Establish and adjust credit policies to accommodate evolving borrower behavior and economic conditions.
+- Monitor portfolio health continuously and adopt proactive risk management strategies to prevent unexpected losses.
+
+### Definitions for Expected Credit Loss (ECL)
+
+1. **Expected Credit Loss (ECL)**  
+   ECL is the primary metric for credit provisioning under accounting standards like IFRS 9. It represents the expected loss on a financial asset over a specific time horizon.  
+   $$\text{ECL} = \text{PD} \times \text{LGD} \times \text{EAD}$$
+
+2. **Probability of Default (PD)**  
+   PD is the likelihood that a borrower will default over a particular period.  
+   Formula: $$\text{PD} = \frac{\text{Number of Defaults}}{\text{Total Loans on the Book}}$$ 
+   Modeled using Logistic Regression or machine learning techniques with a binary outcome.
+
+3. **Loss Given Default (LGD)**  
+   LGD measures the severity of loss expected, expressed as a percentage of exposure, assuming default occurs.  
+   Formula: $$\text{LGD} = 1 - \text{Recovery Rate (RR)} = 1 - \frac{\text{Total Recoveries (Net of Costs)}}{\text{Exposure at Default (EAD)}}$$
+   Modeled using regression techniques such as Beta Regression.
+
+4. **Exposure At Default (EAD)**  
+   EAD is the total amount the bank is exposed to at the default event.  
+   Formula: $$\text{EAD} = \text{Drawn Amount} + (\text{Undrawn Commitment} \times \text{CCF})$$
+   CCF modeling is not the focus of this project due to difficulty in obtaining relevant data.
+
+## Goal of the Analysis
+
+The primary objective is to mimic how credit risk modelers at financial institutions develop models—specifically, models for **Probability of Default (PD)**, **Loss Given Default (LGD)**, and Exposure at Default (EAD)—to predict **Expected Loss (ECL)**.
+
+## Limitations
+
+1. **Static Nature of Prediction**: The models are based on a snapshot prediction at loan issuance, lacking dynamic tracking of risk.
+2. **Simplified Exposure at Default (EAD)**: The project does not model CCF for revolving credit lines due to lack of relevant data, and EAD calculation is simply assumed to be the outstanding principle.
 
 
-## Data Science Solution
+## Dataset Overview
 
-- **Solution Overview:**<br>
-The project aims to develop an early detection model that identifies whether a user is at risk of having a heart attack. The model will utilize accessible features, including basic physical conditions, lifestyle habits, medical history, and vaccination history.
-- **Existing Solutions Drawbacks:**<br>
-Multiple approaches have been developed to assist healthcare providers in assessing the risk of cardiovascular disease. Atherosclerotic Cardiovascular Disease [(ASCVD) Risk Calculator](https://tools.acc.org/ascvd-risk-estimator-plus/#!/calculate/estimate/) assesses the chances of a person aged 40 to 79 developing heart disease over the next 10 years. Similarly, [The American Heart Association Prevent Online Calculator](https://professional.heart.org/en/guidelines-and-statements/prevent-calculator) assesses the risk of heart failure for users aged 30 to 79.<br>
-However, these models impose age restrictions, preventing individuals under 30 or over 80 from accessing them, and they require specific information, such as HDL cholesterol levels, which can only be obtained through blood tests, making these calculators not readily accessible tools.<br> 
-One interesting finding during the exploratory data analysis is that age is exponentially correlated with the risk of heart attack; in fact, individuals aged 80 and above have the highest likelihood of experiencing a heart attack among all age groups. Consequently, the most vulnerable population lacks access to the most needed early detection model, emphasizing the necessity of this project.
-
- - **Machine Learning Solutions:** <br>
-This project will employ various machine learning classifiers to identify individuals at risk of having a heart attack. The classification model will make binary predictions ('Yes'/'No) regarding whether the user is likely to face a heart attack.
-
-- **Expected Outcomes and Impact:** <br>
-The model is designed to be accessible anytime, anywhere, allowing users to promptly identify their risk of heart attacks. Increased awareness of heart attack symptoms could lead to quicker responses during emergencies, ultimately saving lives. Even a modest reduction in heart attack incidents, such as 1%, could help over 8,000 individuals avoid experiencing a heart attack. With the average healthcare costs associated with heart attacks estimated at over $20,000, this could result in annual savings of approximately $161 million.
-
-
-## Application
-To achieve the objectives of this project, I developed an app where users can complete the relevant questionnaires and receive the model’s predictions (indicating whether there is a risk of heart attack). Additionally, I provided links to two mainstream heart disease calculators for users to perform cross-validation. <br>
-
-Click here to access the app: [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://app-heart-attack-prediction.streamlit.app/)
-
-## Metrics of Success
-- **Business Metrics:**<br>
-1. The goal of this project is to develop a model that accurately identifies individuals at risk of a heart attack.<br>
-2. Research indicates that approximately 80-90% of heart attacks are linked to modifiable risk factors, including tobacco use, physical inactivity, and obesity. This leaves 10-20% of heart attacks attributed to genetics or other difficult-to-measure variables such as psychosocial stress.
-
-- **Imbalanced Data Consideration:**<br>
-Due to the severely imbalanced distribution of the target variable (94.7% negative vs. 5.3% positive), accuracy is not a suitable metric. A classifier predicting all instances as negative would achieve 94.7% accuracy but fail to detect any positive cases.
-
-- **Modeling Metrics:**<br>
-1. The **primary objective** is to achieve a **high recall score of 0.8-0.9**, which is crucial for timely identification of true positive cases.
-2. A **low false positive rate** is the **secondary goal**. High recall may lead to many false positives, incorrectly flagging low-risk individuals as high-risk, resulting in unnecessary medical interventions and compromising the model’s reliability.
-
+The dataset used in this analysis is from Lending Club, a prominent peer-to-peer lending platform. It includes loan-level details such as:
+- Loan information: status, amount, terms, interest rate, purpose
+- Borrower characteristics: borrower_id, grade (credit score), income, employment length, zipcode, address state
+- Performance variables: payment status, utstanding balance, revolving balance, previous history of delinquencies, total number of accounts, number of loan inquiries in the past 6 month
+- Derived features: loan_age, utilization rate, debt-to-income ratio
 
 
 ## Project Organization
@@ -80,20 +80,14 @@ Due to the severely imbalanced distribution of the target variable (94.7% negati
 
 **Repository :**<br>
 * `data` 
-    - contains link to the datasource (stored in a publicly accessible cloud storage)
     - saved copy of raw and processed data as long as those are not too large 
+    - data dictionary
 
 * `model`
-    - `joblib` dump of final model(s)
+    - `joblib` dump of model(s)
 
 * `notebooks`
     - contains all final notebooks involved in the project
-
-* `docs`
-    - Final report, presentations, variable descriptions, and relevant documentation for README and presentations
-
-* `references`
-    - Papers and tutorials utilized in the projectPapers and tutorials utilized in the project
 
 * `src`
     - Contains the project source code (refactored from the notebooks)
@@ -112,134 +106,32 @@ Due to the severely imbalanced distribution of the target variable (94.7% negati
 
 
 ## Project Flowchart
-![Project Flowchart](docs/figures/project_flowchart.png)
 
 This project is divided into five main steps:
-- **Data Collection:** <br>
-  1. Data Extraction: Collect and transform multiple datasets, preprocessing the raw data to ensure it can be effectively imported and analyzed.
-  2. Data integration: Combine multiple datasets into a single raw file.
-- **Data Cleaning:** <br>
-  1. Conduct data quality checks.
-  1. Rename columns and categories.
-  2. Address missing values: Multiple rounds of cleaning and imputation to handle missing data effectively.
-  3. Remove duplicate values.
-- **Exploratory Data Analysis (EDA):** <br>
-  1. Analyze the target variable.
-  2. Examine features and their correlation with the probability of having a heart attack.
-  3. Investigate missing values, providing insights into their causes and appropriate imputation methods.
-- **Feature Engineering:** <br>
-  1. Feature selection.
-  2. Feature transformation: Bin numerical features into categories and normalize non-normal features.
-  3. Apply One-Hot Encoding.
-  4. Perform feature scaling.
-  5. Address class imbalance through upsampling and downsampling.
-  6. Apply dimensionality reduction techniques, such as PCA.
-- **Modeling and Evaluation:** <br>
-  1. Baseline modeling: Train baseline models including Logistic Regression, Naive Bayes, Decision Tree, Randorm Forest, XGBoost, Neural Network
-  2. Baseline model evalution: Evaluate baseline models with various metrics, including recall and false positive rate, etc. Compare performance of different models, and generate insights for additional feature engineering.
-  3. Advanced modeling: Train models after additional feature engineering, perform hyperparameter tuning and grid search for optimization. Create customized loss function for Neural network model.
-  4. Final model evaluation: Perform in-depth evaluation of the final model, analyze model limitations if exhibited.
+### 1. Data Cleaning
+- Tasks performed include sorting the dataframe, removing irrelevant features, treating missing values, converting data types, and creating target variables for PD and LGD modeling.
 
+### 2. Exploratory Data Analysis
+- Perform univariate analysis to investigate distributions of targets and predictors and how PD and LGD change over time.
+- Identify variables with outliers and seek solutions to address them.
+- Analyze patterns among missing values and determine methods for imputation.
+- Conduct multivariate analysis to assess the correlation between targets and predictors.
 
+### 3. Preprocessing and Feature Engineering
+- Remove irrelevant and leaky predictors from the training data.
+- Address outliers and missing values comprehensively.
+- Apply feature engineering based on insights derived from EDA.
 
-## Dataset Description
+### 4. PD Modeling
+- Use Logistic Regression to model the likelihood of borrower default, generating the probability of default (PD) for the entire portfolio. Evaluate and interpret the model, fixing any identified issues.
 
-- **Source of the Dataset:** <br>
-The dataset for this project is sourced from the Centers for Disease Control and Prevention (CDC) Behavioral Risk Factor Surveillance System (BRFSS). This program conducts over 400,000 adult interviews each year through telephone surveys to gather comprehensive data on the health status and risk behaviors of U.S. residents.<br>
-For this project, we utilize two specific datasets:<br>
-1. [2022 BRFSS Survey Data and Documentation](https://www.cdc.gov/brfss/annual_data/annual_2022.html): This dataset includes information from the 2022 survey, detailing various health-related behaviors, conditions, and demographic factors.
-2. [2023 BRFSS Survey Data and Documentation](https://www.cdc.gov/brfss/annual_data/annual_2023.html): This dataset features the latest survey data from 2023, further enriching our analysis with updated health information.
+### 5. LGD Modeling
+- Use a two-step approach with classification and regression to model recovery rates (RR) and use the formula to derive Loss Given Default (LGD). Evaluate and interpret the model, adjusting as necessary.
 
-
-- **Overview of Dataset:** <br>
-The 2022 BFRSS Survey dataset includes 445,132 observations and the 2023 BFRSS Survey dataset includes 433,323 observations.<br>
-Both datasets contain various features structured as follows:
-  - **Target Variable**: `had_heart_attack` (categorical, binary)
-  - **Features**: 31 categorical variables, and 6 numerical variables
-
-## Data Dictionary
-The values within each variable reflect the respondents' answers to the corresponding questions.
-
-### Field of Interest
-| Variable                     | Description                                         | Data Type     |
-|:----------------------------|:---------------------------------------------------|:-------------|
-| `had_heart_attack`           | (Ever told) you had a heart attack? | Categorical   |
-
-#### Interviewee's Basic Information
-| Variable                     | Description                                         | Data Type     |
-|:----------------------------|:---------------------------------------------------|:-------------|
-| `year`    | Year which observation was recorded                             | Numeric   |
-| `sex`                        | Sex of respondent                                   | Categorical   |
-| `race_ethnicity_category`    | Race/ethnicity category                             | Categorical   |
-| `age_category`               | Age category                                       | Categorical   |
-| `state`                      | States in U.S. where respondent resides            | Categorical   |
-| `height`          | Reported height in meters                           | Numeric       |
-| `weight`       | Reported weight in kilograms                        | Numeric       |
-| `bmi`                        | Body Mass Index                                     | Numeric       |
-
-#### Health and Lifestyle Information
-| Variable                     | Description                                         | Data Type     |
-|:----------------------------|:---------------------------------------------------|:-------------|
-| `alcohol_drinkers`          | Adults who reported at least one drink in 30 days | Categorical   |
-| `general_health`            | Respondent's general health condition                | Categorical   |
-| `smoker_status`             | Respondent's smoking status                         | Categorical   |
-| `e_cigarette_usage`         | Respondent's e-cigarette usage status              | Categorical   |
-| `physical_activities`       | Participation in physical activities in the past month              | Categorical   |
-| `physical_health_days`      | Poor physical health days in past 30 days         | Categorical   |
-| `mental_health_days`        | Poor mental health days in past 30 days           | Categorical   |
-| `stress_levels`        | How often does respondents feel stress in past 30 days         | Categorical   |
-
-#### Medical History:<br>
-| Variable                     | Description                                         | Data Type     |
-|:----------------------------|:---------------------------------------------------|:-------------|
-| `had_angina`                | (Ever told) had angina or coronary heart disease?  | Categorical   |
-| `had_stroke`                | (Ever told) had a stroke                           | Categorical   |
-| `had_asthma`                | (Ever told) had asthma                             | Categorical   |
-| `had_skin_cancer`           | (Ever told) had non-melanoma skin cancer          | Categorical   |
-| `had_copd`                  | (Ever told) had COPD or related diseases           | Categorical   |
-| `had_diabetes`              | (Ever told) had diabetes                           | Categorical   |
-| `had_kidney_disease`        | (Ever told) had kidney disease (not stones)       | Categorical   |
-| `had_depressive_disorder`    | (Ever told) had a depressive disorder              | Categorical   |
-| `had_arthritis`              | (Ever told) had some form of arthritis             | Categorical   |
-| `deaf_or_hard_of_hearing`   | Deaf or serious difficulty hearing                  | Categorical   |
-| `blind_or_vision_difficulty` | Blind or serious difficulty seeing                  | Categorical   |
-| `difficulty_walking`        | Serious difficulty walking or climbing stairs       | Categorical   |
-| `difficulty_concentrating`   | Difficulty concentrating due to physical or mental conditions | Categorical   |
-| `difficulty_dressing_bathing`| Difficulty dressing or bathing                      | Categorical   |
-| `difficulty_errands`        | Difficulty doing errands due to physical or mental conditions | Categorical   |
-
-#### Health Assessment Information
-| Variable                     | Description                                         | Data Type     |
-|:----------------------------|:---------------------------------------------------|:-------------|
-| `last_checkup_time`         | Time since last routine checkup                    | Categorical   |
-| `chest_scan`                | Have you ever had a CT or CAT scan of your chest? | Categorical   |
-
-#### Vaccination and Drug Use
-| Variable                     | Description                                         | Data Type     |
-|:----------------------------|:---------------------------------------------------|:-------------|
-| `flu_vax`           | Received flu vaccine in the past 12 months         | Categorical   |
-| `tetanus_vax`      | Received a tetanus shot in the past 10 years       | Categorical   |
-| `pneumo_vax`           | Ever had a pneumonia shot                           | Categorical   |
 
 
 <br>
 
 
 ## Credits & References
- [2013 ACC/AHA Guideline on Cardiovascular Risk Assessment](https://www.ahajournals.org/doi/epub/10.1161/01.cir.0000437741.48606.98)
-  - Risk stratification: Stresses balancing sensitivity/specificity to avoid catastrophic false negatives.
-  - Implication for Machine Learning: Validates the clinical rationale for prioritizing recall (even at the cost of lower precision) in acute settings.
-
-[1998 AHA Statement: Risk Factor Assessment](https://www.ahajournals.org/doi/epub/10.1161/01.CIR.97.18.1837)
-  - Missing high-risk cases (false negatives) can lead to preventable deaths.
-  - Trade-offs between sensitivity and false positive rate
-
-[Heart Disease and Stroke Statistics—2021 Update: A Report From the American Heart Association]((https://www.ahajournals.org/doi/10.1161/CIR.0000000000000950))
-  - Approximately 20% of myocardial infarctions occur in individuals without traditional risk factors, highlighting limitations in risk prediction.
-  - A substantial number of heart attacks can occur in individuals with no prior history of heart disease or apparent risk factors.
-
-[Effect of potentially modifiable risk factors associated with myocardial infarction in 52 countries](https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(04)17018-9/fulltext)
-  - About 90% of myocardial infarctions (MIs) are linked to modifiable risks, leaving the rest 10% unexplained.
-  - The study identified 9 modifiable risk factors (e.g., smoking, hypertension, diabetes, abdominal obesity) that accounted for ~90% of the population-attributable risk (PAR) for MIs globally.
-  - The remaining ~10% of cases were not explained by these factors, suggesting contributions from non-modifiable risks (e.g., genetics) or unmeasured variables (e.g., inflammation, psychosocial stress).
-  
+ [Credit Loss Modeling (PD/LGD/EAD)](https://www.youtube.com/watch?v=q4TaJHmu788&list=PLn699ZSeIUYeev-Fwyt-NLf7e5yKnY28q&index=8)
